@@ -9,9 +9,10 @@ import { RecipeItemComponent } from './recipe-item.component'
 export class RecipeListComponent implements OnInit {
 
   @Output() recipeSelected = new EventEmitter<Recipe>();
-  recipes: Recipe[] = [];
-  recipe: Recipe = new Recipe('Dummy','Dummy','http://www.dummymag.com//media/img/dummy-logo.png');
-
+  recipes: Recipe[] = [
+    new Recipe('Biryani','Very tasty','http://i.ndtvimg.com/i/2016-06/biryani_625x350_71466587674.jpg',[]),
+    new Recipe('Qourma','Very tasty indeed','http://www.boldsky.com/img/2014/10/17-chicken-korma-lucknow.jpg',[])
+  ];
   onSelected(recipe: Recipe){
 
     this.recipeSelected.emit(recipe);
