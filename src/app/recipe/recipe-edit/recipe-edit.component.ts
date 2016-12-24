@@ -20,8 +20,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     constructor(private route: ActivatedRoute,
                 private recipeService: RecipeService,
                 private formBuilder: FormBuilder,
-                private router: Router,
-                ) {
+                private router: Router,) {
     }
 
     ngOnInit() {
@@ -46,10 +45,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    private navigateBack()
-    {
+    private navigateBack() {
         this.router.navigate(['../'])
     }
+
     private initForm() {
 
         let recipeName = null;
@@ -58,14 +57,17 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         let recipeIngredients: FormArray = new FormArray([]);
 
         if (!this.isNew) {
-            for (let i = 0; i < this.recipe.ingredients.length; i++) {
-                recipeIngredients.push(new FormGroup({
-                    'name': new FormControl(this.recipe.ingredients[i].name, Validators.required),
-                    'amount': new FormControl(this.recipe.ingredients[i].amount,
-                        [Validators.required,
-                            Validators.pattern("\\d+")])
-                }))
+            if (this.recipe.hasOwnProperty('ingredients')) {
+                for (let i = 0; i < this.recipe.ingredients.length; i++) {
+                    recipeIngredients.push(new FormGroup({
+                        'name': new FormControl(this.recipe.ingredients[i].name, Validators.required),
+                        'amount': new FormControl(this.recipe.ingredients[i].amount,
+                            [Validators.required,
+                                Validators.pattern("\\d+")])
+                    }))
+                }
             }
+
             recipeName = this.recipe.name;
             recipeImageUrl = this.recipe.imagePath;
             recipeContent = this.recipe.description;
@@ -82,32 +84,32 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     }
 
 
-    onCancel(){
+    onCancel() {
         this.navigateBack();
     }
-    onSubmit(){
+
+    onSubmit() {
         const newRecipe = this.recipeForm.value;
-        if(this.isNew)
-        {
+        if (this.isNew) {
             this.recipeService.addRecipe(newRecipe);
         }
-        else
-        {
-            this.recipeService.editRecipe(this.recipe,newRecipe);
+        else {
+            this.recipeService.editRecipe(this.recipe, newRecipe);
         }
         this.navigateBack();
     }
 
-    onAddItem(name: String, amount: String){
-        (<FormArray>this.recipeForm.controls['ingredients']).push(new FormGroup({ 'name': new FormControl(name, Validators.required),
+    onAddItem(name: String, amount: String) {
+        (<FormArray>this.recipeForm.controls['ingredients']).push(new FormGroup({
+            'name': new FormControl(name, Validators.required),
             'amount': new FormControl(amount,
                 [Validators.required,
                     Validators.pattern("\\d+")])
         }))
 
     }
-    onRemoveItem(index: number)
-    {
+
+    onRemoveItem(index: number) {
         (<FormArray>this.recipeForm.controls['ingredients']).removeAt(index);
     }
 

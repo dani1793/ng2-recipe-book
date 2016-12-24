@@ -17,6 +17,8 @@ import {APP_ROUTES_PROVIDERS} from "./app.routes";
 import {RecipeStartComponent} from './recipe/recipe-start.component';
 import {RecipeRoutingModule} from "./recipe/recipe.routes";
 import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component';
+import {Observable} from "rxjs";
+
 
 @NgModule({
     declarations: [
@@ -39,7 +41,8 @@ import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component'
         //routes
         RouterModule.forRoot(APP_ROUTES_PROVIDERS),
         RecipeRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+
 
     ],
     providers: [],
